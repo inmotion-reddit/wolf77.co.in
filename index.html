@@ -102,7 +102,50 @@ window.onunload = function() {
         background-image: none !important;
     }
 }
-</style>	
+</style>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+        // Function to initialize lazy loading
+        const lazyLoadElements = () => {
+            // Select elements with the class 'lazy-load'
+            const lazyElements = document.querySelectorAll('.lazy-load:not(.loaded)');
+            
+            // Create an Intersection Observer
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        
+                        // Check if it's an image or a background
+                        if (element.tagName === 'IMG') {
+                            const src = element.getAttribute('data-src');
+                            if (src) {
+                                element.src = src;
+                                element.onload = () => element.classList.add('loaded');
+                            }
+                        } else {
+                            const bgImage = element.getAttribute('data-bg');
+                            if (bgImage) {
+                                element.style.backgroundImage = `url(${bgImage})`;
+                                element.classList.add('loaded');
+                            }
+                        }
+                        
+                        // Stop observing the current element
+                        observer.unobserve(element);
+                    }
+                });
+            }, { rootMargin: '200px 0px' }); // Adjust rootMargin as needed
+            
+            // Observe each lazy element
+            lazyElements.forEach(element => observer.observe(element));
+        };
+
+        // Run lazy loading function
+        lazyLoadElements();
+    });
+</script>	
 
 <script>
 window._wpemojiSettings = {
