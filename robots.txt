@@ -1,5 +1,10 @@
 User-agent: *
-Disallow: 
+Disallow: /wp-includes/js/wp-emoji-release.min.js?ver=6.7.1
+Disallow: /responsible-gaming
+Disallow: /withdrawal.html
+Disallow: /terms-and-conditions
+Disallow: /assets_files/saved_resource.html
+Disallow: /about-us
 
 User-agent:Google-Extended
 Disallow:/
